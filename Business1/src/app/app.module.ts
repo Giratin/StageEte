@@ -21,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { CcComponent } from './cc/cc.component';
 import { TeamComponent } from './team/team.component';
 import { EntrepriseComponent } from './user/entreprise/entreprise.component';
+import { AddComponent } from './staff/add/add.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { EntrepriseComponent } from './user/entreprise/entreprise.component';
     HomeComponent,
     CcComponent,
     TeamComponent,
-    EntrepriseComponent
+    EntrepriseComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

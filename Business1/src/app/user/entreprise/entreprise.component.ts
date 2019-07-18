@@ -3,6 +3,9 @@ import { AuthenticationService } from 'src/app/authentication.service';
 import { Entreprise, UserService } from 'src/app/user.service';
 import * as mapboxgl from 'mapbox-gl';
 import { MapService } from 'src/app/services/map.service';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-entreprise',
@@ -13,6 +16,9 @@ export class EntrepriseComponent implements OnInit {
 
 
   
+  verifyInputs : boolean = false;
+
+
 
   entreprise : Entreprise = {
     id: 0,
@@ -25,8 +31,11 @@ export class EntrepriseComponent implements OnInit {
   }
 
 
-  constructor(private auth : AuthenticationService, private entrepriseService : UserService, private maService : MapService) { 
-    
+  constructor(private auth : AuthenticationService,  private entrepriseService : UserService, private maService : MapService, private router : Router) { 
+    if(this.auth.getUserDetails().entreprise_id != null || this.auth.getUserDetails().role != "owner"){
+      console.log("this user have already an entreprise registered")
+      this.router.navigateByUrl('/');
+    }
   }
 
   ngOnInit() {
@@ -34,6 +43,8 @@ export class EntrepriseComponent implements OnInit {
     this.maService.getLocation().subscribe((res)=>{
       console.log(res)
     })
+
+    //document.querySelector('.dismissButton').;
 
   }
 
