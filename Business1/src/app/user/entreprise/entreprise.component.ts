@@ -33,7 +33,7 @@ export class EntrepriseComponent implements OnInit {
 
   constructor(private auth : AuthenticationService,  private entrepriseService : UserService, private maService : MapService, private router : Router) { 
     if(this.auth.getUserDetails().entreprise_id != null || this.auth.getUserDetails().role != "owner"){
-      console.log("this user have already an entreprise registered")
+      console.log("this user have already an entreprise registered  ")
       this.router.navigateByUrl('/');
     }
   }
@@ -49,21 +49,21 @@ export class EntrepriseComponent implements OnInit {
   }
 
 
-longitude = 10.189690589904785;
-latitude = 36.898395660579794;
+  longitude = 10.189690589904785;
+  latitude = 36.898395660579794;
 
-markers = { latitude: 36.898395660579794, longitude: 10.189690589904785 };
+  markers = { latitude: 36.898395660579794, longitude: 10.189690589904785 };
 
-placeMarker(position: any) {
-  const lat = position.coords.lat;
-  const lng = position.coords.lng;
+  placeMarker(position: any) {
+    const lat = position.coords.lat;
+    const lng = position.coords.lng;
 
 
-  console.log('lat ' + lat)
-  console.log('long ' + lng)
+    console.log('lat ' + lat)
+    console.log('long ' + lng)
 
-  this.markers = { latitude: lat, longitude: lng };
-}
+    this.markers = { latitude: lat, longitude: lng };
+  }
 
  
   create(){

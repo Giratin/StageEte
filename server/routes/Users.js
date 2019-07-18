@@ -182,6 +182,7 @@ users.post('/update', (req, res)=>{
 
 users.post('/addstaff', (req, res) => {
 
+  //var id = req.params.id;
     var userReq = req.body;
 
     const userData = {
@@ -253,6 +254,46 @@ users.get('/list', (req , res)=>{
       console.log("fatal error " + err)
     })
 // }
+})
+
+users.post('/createIdentifier', (req,res)=>{
+  var year = new Date().getYear();
+  var entrepriseName = req.body.name.toUpperCase();
+
+  //console.log(entrepriseName.toUpperCase())
+  if(entrepriseName.length > 3){
+    entrepriseName = year+entrepriseName.substring( 0 , 3 );
+  }
+  console.log(entrepriseName)
+
+
+  User.findOne({
+    where :  {
+      registration : {
+        [Op.like] : '%'+entrepriseName+'%'
+      } 
+    } , order : [['id', 'DESC']]
+  }).then((user)=>{
+    if(user){
+        var number = user.registration.substring(6, user.registration.length);
+        var next = parseInt(number)+1 ;
+        var newToken;
+      if(next<=9){
+        newToken = entrepriseName+ '00' + next;
+      }else if(next<=99){
+        newToken = entrepriseName+ '0' + next;
+      }else{
+        newToken = entrepriseName + next;
+      }
+      res.json(newToken)
+    }else{
+      console.log("notyijng to show")
+    }
+  }).catch((err)=>{
+    res.json(err)
+  })
+
+  //res.json(year)
 })
 
 module.exports = users

@@ -40,6 +40,9 @@ module.exports = db.sequelize.define(
         password: {
             type: Sequelize.STRING
         },
+        registration: {
+            type: Sequelize.STRING
+        },
         entreprise_id: {
             type : Sequelize.INTEGER,
             refrences: {
