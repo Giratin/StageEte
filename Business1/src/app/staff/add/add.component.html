@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 contact-form">
+            <h4 class="white-w3ls" style="text-align: center">Add <span>Staff</span></h4>
+				<form action="#" method="post">
+					<div class="styled-input agile-styled-input-top">
+						<input type="text" name="matricule"  [(ngModel)]="matricule" [disabled]="matricule">
+						
+						<span></span>
+                    </div>
+                    
+
+					<div class="styled-input agile-styled-input-top">
+						<input type="text" #nameControl="ngModel" required [(ngModel)]="credentials.name" name="name" autocomplete="false" >
+                        <label>Name</label>
+                        <div *ngIf="nameControl.invalid && nameControl.touched || nameControl.invalid && nameControl.touched" class="alert alert-error">Name is required</div>
+						<span></span>
+                    </div>
+                    
+
+					<div class="styled-input agile-styled-input-top">
+						<input type="text" [(ngModel)]="credentials.lname" name="lastname" required="">
+						<label>Last name</label>
+						<span></span>
+					</div>
+					<div class="styled-input agile-styled-input-top">
+						<input type="text"  [(ngModel)]="credentials.phone"  name="phone" required="">
+						<label>Phone</label>
+						<span></span>
+					</div>
+					<div class="styled-input agile-styled-input-top">
+						<input type="text"  [(ngModel)]="credentials.adress"  name="adresse" required="">
+						<label>Adresse</label>
+						<span></span>
+					</div>
+					<div class="styled-input">
+						<input type="email" [(ngModel)]="credentials.email"  name="email" required=""> 
+						<label>Email</label>
+						<span></span>
+					</div> 
+					
+					<input type="submit" value="SAVE">
+				</form>
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

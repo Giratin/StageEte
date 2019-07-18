@@ -122,7 +122,7 @@ entrerpises.post('/create' , (req,res)=>{
                     console.log("error finding user "  +err)
                 })
             }).catch((err)=>{
-                console.log("keeertha saret")
+                console.log("keeertha saret" + err)
                 res.json({
                     'userId' : 'error',
                     'entreprise' : 'error',

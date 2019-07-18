@@ -131,4 +131,10 @@ export class AuthenticationService {
     });
   }
 
+  public receiveRegistrationToken( id : object) : Observable<any>{
+    return this.http.post(this.url + '/user/createIdentifier', id,  {
+      headers: { Authorization: ` ${this.getToken()}` }
+    })
+}  
+
 }

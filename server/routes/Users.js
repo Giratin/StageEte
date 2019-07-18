@@ -8,6 +8,7 @@ const Op = Sequelize.Op;
 const cookieParser  = require('cookie-parser');
 
 const User = require('../models/User')
+const Entreprise = require('../models/Entreprise')
 const uniqueUsername = require('../models/User')
 users.use(cors())
 
@@ -15,7 +16,6 @@ users.use(cors())
 process.env.SECRET_KEY = 'secret'
 
 users.post('/register', (req, res) => {
-  console.log(req.body)
   const userData = {
     name: req.body.name,
     lname: req.body.lname,
@@ -37,6 +37,7 @@ users.post('/register', (req, res) => {
     //TODO bcrypt
     .then(user => {
       if (!user) {
+       
         bcrypt.hash(req.body.password, 10 , (err,hash)=>{
           userData.password = hash
           User.create(userData)
@@ -51,13 +52,14 @@ users.post('/register', (req, res) => {
           })
         })
       } else {
-
-
+        console.log(user.dataValues)
+        console.log("nothing")
         
         res.send(user);
       }
     })
     .catch(err => {
+      console.log("catcinh " + err)
       res.send('error: ' + err)
     })
 })
@@ -103,6 +105,7 @@ users.post('/login', (req, res) => {
 users.get('/profile', (req, res) => {
   var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
 
+  console.log("profile id : " + decoded.id)
   User.findOne({
     where: {
       id: decoded.id
@@ -110,7 +113,7 @@ users.get('/profile', (req, res) => {
   })
     .then(user => {
       if (user) {
-        
+        console.log(" found ",user.entreprise_id)
         res.json(user)
        // console.log(user)
       } else {
@@ -118,6 +121,7 @@ users.get('/profile', (req, res) => {
       }
     })
     .catch(err => {
+      console.log("fatal error : " +err)
       res.send('error: ' + err)
     })
 })
@@ -257,6 +261,62 @@ users.get('/list', (req , res)=>{
 })
 
 users.post('/createIdentifier', (req,res)=>{
+
+  var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+
+  console.log("mochkla lhné " + req.body.id)
+
+  Entreprise.findOne({
+    where : {
+      id : req.body.id
+    }
+  }).then((entreprise) =>{
+    if(entreprise){
+      var year = new Date().getYear();
+      var entrepriseName = entreprise.name.toUpperCase();
+      console.log("entreprise majouda")
+      User.findOne({
+        where :  {
+          registration : {
+            [Op.like] : '%'+entrepriseName+'%'
+          } 
+        } , order : [['id', 'DESC']]
+      }).then((user)=>{
+        if(user){
+           console.log("user mawjoud")
+            var number = user.registration.substring(6, user.registration.length);
+            var next = parseInt(number)+1 ;
+            var newToken;
+          if(next<=9){
+            newToken = entrepriseName+ '00' + next;
+          }else if(next<=99){
+            newToken = entrepriseName+ '0' + next;
+          }else{
+            newToken = entrepriseName + next;
+          }
+          res.json(newToken)
+        }else{
+          console.log("user mahuch mawjoud")
+          var newToken = year + entreprise.name.toUpperCase().substring(0,3)+"001";
+          console.log(newToken)
+          res.json(newToken)
+        }
+      }).catch((err)=>{
+        console.log("catch : " + err)
+        res.json(err)
+      })
+
+      
+    }
+  })
+
+
+ // var idEn = req.body.id;
+ // console.log(idEn);
+  /*
+
+
+
   var year = new Date().getYear();
   var entrepriseName = req.body.name.toUpperCase();
 
@@ -293,7 +353,7 @@ users.post('/createIdentifier', (req,res)=>{
     res.json(err)
   })
 
-  //res.json(year)
+  //res.json(year)*/
 })
 
 module.exports = users

@@ -1,0 +1,12 @@
+.container{
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+}
+
+.alert-error{
+    background-color: #f76673;
+    border-color: #e01f3d;
+    color: #ffffff;
+    text-align: center;
+}
