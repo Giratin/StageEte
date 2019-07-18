@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="banner-form-agileinfo">
+                <h5>Do you have an <span>Account</span>?</h5>
+                <p>
+                    Ut enim ad minima veniam, quis nostrum 
+                    exerc ullam corporis nisi ut aliqui
+                </p>
+
+                <form #loginForm="ngForm" (submit)="login(event)">
+                    <input type="text" class="email" #emailForm="ngModel" [(ngModel)]="credentials.email" name="email" placeholder="E-mail" required  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <input type="password" class="password"  [(ngModel)]="credentials.password" #passwordForm="ngModel" name="password" placeholder="Password" required>
+                
+                    <input type="submit" [disabled]="loginForm.invalid" class="hvr-shutter-in-vertical" value="Login">  	
+                    <a routerLink="/register" class="signup" >Create new account</a>  	
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

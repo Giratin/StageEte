@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="banner-form-agileinfo">
+                <h5>Don't you have an <span>Account</span>?</h5>
+                <p style="text-align: center">
+                   Few steps are required to be able managing your business <br/>
+                   <b>Growing Your Business Made Easy</b>
+                </p>
+
+                <form #registerForm="ngForm" (submit)="register(event)">
+                    <input type="text" #nameControl="ngModel" required [(ngModel)]="credentials.name" name="name" autocomplete="false" class="form-control" placeholder="Name">
+                    <div *ngIf="nameControl.invalid && nameControl.touched || nameControl.invalid && nameControl.touched" class="alert alert-error">Name is required</div>
+                    
+                    <input type="text" [(ngModel)]="credentials.lname" required #lnameControl="ngModel" name="lname" class="form-control" placeholder="Last name">
+                    <div *ngIf="lnameControl.invalid && lnameControl.touched || lnameControl.invalid && lnameControl.touched" class="alert alert-error">Last name is required</div>
+
+                    <input type="text" [(ngModel)]="credentials.phone"  #phoneControl="ngModel" name="phone" class="form-control" placeholder="Phone" required>
+                    <div *ngIf="phoneControl.invalid && phoneControl.touched || phoneControl.invalid && phoneControl.touched" class="alert alert-error">Last name is required</div>
+                    <div class="alert alert-error" *ngIf="emailDuplicated">This phone has been already used</div>
+
+                    <input type="text" [(ngModel)]="credentials.address" #addressControl="ngModel" name="address" class="form-control" placeholder="Address" required>
+                    <div *ngIf="addressControl.invalid && addressControl.touched || addressControl.invalid && addressControl.touched" class="alert alert-error">Address is required</div>
+
+
+                    <input type="text" class="email" #emailControl="ngModel" [(ngModel)]="credentials.email" name="email" placeholder="E-mail" required  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <div class="alert alert-error" *ngIf="emailControl.errors?.pattern">This is not a valid Email!</div>
+                    <div *ngIf="!emailControl.prestine && !emailControl.dirty && emailControl.touched || emailControl.invalid && emailControl.touched" class="alert alert-error">Email is required</div>
+                    <div class="alert alert-error" *ngIf="emailDuplicated">This email has been already used</div>
+
+
+                    <input type="password" class="password"  [(ngModel)]="credentials.password" #passwordControl="ngModel" name="password" placeholder="Password" required>
+                    <div *ngIf="!passwordControl.prestine && !passwordControl.dirty && passwordControl.touched || passwordControl.invalid && passwordControl.touched" class="alert alert-error">Password is required !</div>
+
+                    <input type="password" class="password" (keyup)="verify()" [(ngModel)]="secondePassword" #password2Control="ngModel" name="password2" placeholder="Retype Password" required>
+                    <div *ngIf="!password2Control.prestine && !password2Control.dirty && password2Control.touched && password2Control.invalid || password2Control.invalid && password2Control.touched" class="alert alert-error">Please retype password</div>
+                    <div class="alert alert-error" *ngIf="!passwordMatches">Password doesn't match</div>
+                
+                   
+                    <input type="submit" [disabled]="registerForm.invalid" class="hvr-shutter-in-vertical" value="SIGN UP">  	
+                    <a routerLink="/login" class="signup" >Login</a>  	
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+.container{
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+}
+
+.hvr-shutter-in-vertical{
+    margin-bottom: 12px;
+
+}
+.signup{
+
+    width: 100%;
+    margin-top: 0px;
+    padding: 12px 0px;
+    font-size: 15px;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    background: #e01f3d;
+    transition: 0.5s all;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+.signup:hover{
+    background: #23B684;
+}
