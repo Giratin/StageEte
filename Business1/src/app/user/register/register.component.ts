@@ -70,6 +70,9 @@ export class RegisterComponent implements OnInit {
         }
       }else{
         console.log("add success")
+        if(this.auth.isLoggedIn()){
+          this.router.navigateByUrl('/entreprise')
+        }
       }
 
     })

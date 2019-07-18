@@ -3,7 +3,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-6 contact-form">
             <h4 class="white-w3ls" style="text-align: center">Add <span>Staff</span></h4>
-				<form action="#" method="post">
+				<form (submit)="create()">
 					<div class="styled-input agile-styled-input-top">
 						<input type="text" name="matricule"  [(ngModel)]="matricule" [disabled]="matricule">
 						
@@ -28,6 +28,7 @@
 						<input type="text"  [(ngModel)]="credentials.phone"  name="phone" required="">
 						<label>Phone</label>
 						<span></span>
+						<div class="alert alert-error" *ngIf="duplicatedPhone">This phone is already registred</div>
 					</div>
 					<div class="styled-input agile-styled-input-top">
 						<input type="text"  [(ngModel)]="credentials.adress"  name="adresse" required="">
@@ -38,9 +39,10 @@
 						<input type="email" [(ngModel)]="credentials.email"  name="email" required=""> 
 						<label>Email</label>
 						<span></span>
+						<div class="alert alert-error" *ngIf="duplicatedEmail">This email is already registred</div>
 					</div> 
 					
-					<input type="submit" value="SAVE">
+					<input type="submit" class="signup" value="SAVE">
 				</form>
 
         </div>

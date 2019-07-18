@@ -70,7 +70,6 @@ entrerpises.post('/create' , (req,res)=>{
 
     var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
 
-
     
     Entreprise.findOne({
         where : 
@@ -95,7 +94,6 @@ entrerpises.post('/create' , (req,res)=>{
                         user.update(
                             { entreprise_id : entrepriseId }
                         )
-                        console.log("execution kemlet w mrigla")
                         res.json({
                             'userId' : userId,
                             'entreprise' : entrepriseId,
@@ -103,7 +101,6 @@ entrerpises.post('/create' , (req,res)=>{
                             status : 200
                         })
                     }else{
-                        console.log("user mafammech")
                         res.json({
                             'userId' : 'not found',
                             'entreprise' : entrepriseId,
@@ -112,7 +109,6 @@ entrerpises.post('/create' , (req,res)=>{
                         })
                     }
                 }).catch((err)=>{
-                    console.log("mal9itech il user")
                     res.json({
                         'userId' : 'not found',
                         'entreprise' : 'not found',
@@ -122,7 +118,6 @@ entrerpises.post('/create' , (req,res)=>{
                     console.log("error finding user "  +err)
                 })
             }).catch((err)=>{
-                console.log("keeertha saret" + err)
                 res.json({
                     'userId' : 'error',
                     'entreprise' : 'error',
@@ -131,7 +126,6 @@ entrerpises.post('/create' , (req,res)=>{
                 })
             })
         }else{
-            console.log("entreprise deaj mawjouda -_-")
             res.json({
                 'userId' : 'error',
                 'entreprise' : 'exits',
@@ -142,5 +136,79 @@ entrerpises.post('/create' , (req,res)=>{
     })
 })
 
+
+entrerpises.get('/show/:id', (req,res)=>{
+    Entreprise.findOne({
+        where : {
+            id : req.params.id
+        }
+    }).then((entreprise)=>{
+        if(entreprise){
+            res.json(entreprise)
+        }else{
+            res.json({
+                'id' : '0',
+                'status' : '404'
+            })
+        }
+    }).catch((err)=>{
+        res.json({
+            'id' : '0',
+            'status' : '500'
+        })
+    })
+})
+
+entrerpises.get('/delete/:id', (req,res)=>{
+
+
+    Entreprise.findOne({
+        where : {
+            id : req.params.id
+        }
+    }).then((entreprise)=>{
+        if(entreprise){
+
+            //cascade on delete
+            User.findAll({
+                where : {
+                    entreprise_id : entreprise.id
+                }
+            }).then((users)=>{
+                if(users){
+                    users.destroy();
+                }
+            }).catch((err)=>{
+                res.json({
+                    'id' : '0',
+                    'entreprise' : entreprise.id,
+                    'issus' : 'error while deleting users',
+                    'status' : 'internal server error'
+                })
+            })
+
+            entreprise.destroy();
+            //res.json(entreprise)
+            res.json({
+                'id' : req.params.id,
+                'job' : 'entreprise deleted successfully',
+                'status' : '200'
+            })
+        }else{
+            res.json({
+                'id' : '0',
+                'job' : 'unable to find entreprise with id : ' +req.params.id ,
+                'status' : '404'
+            })
+        }
+    }).catch((err)=>{
+        res.json({
+            'id' : '0',
+            'job' : 'fatal error on deleting entrprise on id : ' +req.params.id ,
+            'errorMessage' : err ,
+            'status' : '500'
+        })
+    })
+})
 
 module.exports = entrerpises

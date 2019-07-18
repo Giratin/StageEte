@@ -186,7 +186,6 @@ users.post('/update', (req, res)=>{
 
 users.post('/addstaff', (req, res) => {
 
-  //var id = req.params.id;
     var userReq = req.body;
 
     const userData = {
@@ -197,12 +196,16 @@ users.post('/addstaff', (req, res) => {
       adress : userReq.adress,
       email : userReq.email,
       role : userReq.role,
-      entreprise_id : userReq.entreprise_id
+      entreprise_id : userReq.entreprise_id,
+      registration : userReq.password,
     }
 
     User.findOne({
       where: {
-          email: userReq.email  
+          [Op.or]: {
+            email: { [Op.eq]:  userReq.email  },
+            phone: { [Op.eq]:  userReq.phone },
+          }
         }
       })
       .then(user => {
@@ -218,11 +221,17 @@ users.post('/addstaff', (req, res) => {
 
           })
         } else {
-          res.send({
-            'email' : userReq.email,
-            'status' : 'duplicated email'
-          })
-
+          if(user.dataValues.email === userReq.email){
+            res.send({
+              'email' : userReq.email,
+              'status' : 'email'
+            })
+          }else if(user.dataValues.phone === userReq.phone){
+            res.send({
+              'email' : userReq.email,
+              'status' : 'phone'
+            })
+          }
         }
       })
       .catch(err => {
@@ -231,41 +240,27 @@ users.post('/addstaff', (req, res) => {
           'status' : 'unhundled error'
         })
       })
-  
 })
 
 users.get('/list', (req , res)=>{
-  /* var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
-  if(decoded.role != 'user')
-    res.sendStatus(403)
-  else{*/
     User.findAll({
-      where : {
-        role : "livreur"
-      }
+      where : [
+        {role : "livreur"},
+        {entreprise : req.body.entreprise_id}
+      ]
     }).then((user)=>{
       if(user){
-        
-        //console.log(res.body)
-
         res.json(user)
-
-       // res.json("success");
-       // res.sendStatus(200)
       }
     }).catch(err =>{
       res.json(err)
       console.log("fatal error " + err)
     })
-// }
 })
 
 users.post('/createIdentifier', (req,res)=>{
 
   var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
-
-  console.log("mochkla lhné " + req.body.id)
-
   Entreprise.findOne({
     where : {
       id : req.body.id
@@ -274,29 +269,30 @@ users.post('/createIdentifier', (req,res)=>{
     if(entreprise){
       var year = new Date().getYear();
       var entrepriseName = entreprise.name.toUpperCase();
-      console.log("entreprise majouda")
+      var looking =  entreprise.name.toUpperCase().substring(0,3);
+      //console.log("entreprise majouda")
       User.findOne({
         where :  {
           registration : {
-            [Op.like] : '%'+entrepriseName+'%'
+            [Op.like] : '%'+looking+'%'
           } 
         } , order : [['id', 'DESC']]
       }).then((user)=>{
         if(user){
-           console.log("user mawjoud")
+           //console.log("user mawjoud")
             var number = user.registration.substring(6, user.registration.length);
             var next = parseInt(number)+1 ;
             var newToken;
-          if(next<=9){
-            newToken = entrepriseName+ '00' + next;
-          }else if(next<=99){
-            newToken = entrepriseName+ '0' + next;
+          if(next<9){
+            newToken = year + looking+ '00' + next;
+          }else if(next<99){
+            newToken =  year + looking+ '0' + next;
           }else{
-            newToken = entrepriseName + next;
+            newToken =  year + looking + next;
           }
           res.json(newToken)
         }else{
-          console.log("user mahuch mawjoud")
+         // console.log("user mahuch mawjoud")
           var newToken = year + entreprise.name.toUpperCase().substring(0,3)+"001";
           console.log(newToken)
           res.json(newToken)
@@ -304,56 +300,9 @@ users.post('/createIdentifier', (req,res)=>{
       }).catch((err)=>{
         console.log("catch : " + err)
         res.json(err)
-      })
-
-      
+      }) 
     }
   })
-
-
- // var idEn = req.body.id;
- // console.log(idEn);
-  /*
-
-
-
-  var year = new Date().getYear();
-  var entrepriseName = req.body.name.toUpperCase();
-
-  //console.log(entrepriseName.toUpperCase())
-  if(entrepriseName.length > 3){
-    entrepriseName = year+entrepriseName.substring( 0 , 3 );
-  }
-  console.log(entrepriseName)
-
-
-  User.findOne({
-    where :  {
-      registration : {
-        [Op.like] : '%'+entrepriseName+'%'
-      } 
-    } , order : [['id', 'DESC']]
-  }).then((user)=>{
-    if(user){
-        var number = user.registration.substring(6, user.registration.length);
-        var next = parseInt(number)+1 ;
-        var newToken;
-      if(next<=9){
-        newToken = entrepriseName+ '00' + next;
-      }else if(next<=99){
-        newToken = entrepriseName+ '0' + next;
-      }else{
-        newToken = entrepriseName + next;
-      }
-      res.json(newToken)
-    }else{
-      console.log("notyijng to show")
-    }
-  }).catch((err)=>{
-    res.json(err)
-  })
-
-  //res.json(year)*/
 })
 
 module.exports = users

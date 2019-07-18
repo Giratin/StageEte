@@ -24,7 +24,7 @@
                         </li>	
                         <li>
                             
-                            <a *ngIf="!auth.isLoggedIn()" routerLink="/login" class="hvr-underline-from-center">Login</a>
+                            <a *ngIf="!auth.isLoggedIn()" routerLink="/user/login" class="hvr-underline-from-center">Login</a>
                             <a *ngIf="auth.isLoggedIn()" style="cursor: pointer" (click)="auth.logout()" class="hvr-underline-from-center">Logout</a>
                     </ul>
                 <!--/div-->

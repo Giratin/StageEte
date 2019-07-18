@@ -18,10 +18,11 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { LoginComponent } from './user/login/login.component';
 import { RegisterComponent } from './user/register/register.component';
 import { HomeComponent } from './home/home.component';
-import { CcComponent } from './cc/cc.component';
-import { TeamComponent } from './team/team.component';
 import { EntrepriseComponent } from './user/entreprise/entreprise.component';
 import { AddComponent } from './staff/add/add.component';
+import { ListComponent } from './staff/list/list.component';
+import { DetailsComponent } from './staff/details/details.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,11 @@ import { AddComponent } from './staff/add/add.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    CcComponent,
-    TeamComponent,
     EntrepriseComponent,
-    AddComponent
+    AddComponent,
+    ListComponent,
+    DetailsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
