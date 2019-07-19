@@ -26,7 +26,7 @@ export class ListComponent implements OnInit {
       this.count = Math.round(parseInt(res[0]["count"]));
     })
 
-    this.userService.showList({'page' : this.page, 'number' : this.model}).subscribe((res)=>{
+    this.userService.showList({'page' : this.page, 'number' : this.model, 'entreprise_id' : this.auth.getUserDetails().entreprise_id}).subscribe((res)=>{
       console.log(res)
       this.users = res;
       this.setPage(1);
@@ -37,7 +37,7 @@ export class ListComponent implements OnInit {
    setPage(page: number) {
     this.pager = this.pagerService.getPager(this.count, page, this.model);
 
-    this.userService.showList({'page' : page, 'number' : this.model}).subscribe((res)=>{
+    this.userService.showList({'page' : page, 'number' : this.model, 'entreprise_id' : this.auth.getUserDetails().entreprise_id}).subscribe((res)=>{
       this.users = res;
     });
   }
@@ -51,7 +51,7 @@ export class ListComponent implements OnInit {
     this.userService.getCount(this.auth.getUserDetails().entreprise_id).subscribe((res)=>{
       this.count = Math.round(parseInt(res[0]["count"]));
     })
-    this.userService.showList({'page' : this.page, 'number' : this.model}).subscribe((res)=>{
+    this.userService.showList({'page' : this.page, 'number' : this.model, 'entreprise_id' : this.auth.getUserDetails().entreprise_id}).subscribe((res)=>{
       this.users = res;
       this.setPage(1);
     });

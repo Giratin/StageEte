@@ -25,100 +25,25 @@
 							</ul>
 						</div>
 					</li>
-                    <!--
-					<li>
-						<time datetime="2014-07-20 0000">
-							<span class="day">8</span>
-							<span class="month">Jul</span>
-							<span class="year">2014</span>
-							<span class="time">12:00 AM</span>
-						</time>
-						<div class="info">
-							<h2 class="title">One Piece Unlimited World Red</h2>
-							<p class="desc">PS Vita</p>
-						
-						</div>
-						<div class="social">
-							<ul>
-								<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-								<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-								<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-							</ul>
-						</div>
-					</li>
-
-					<li>
-						<time datetime="2014-07-20 2000">
-							<span class="day">20</span>
-							<span class="month">Jan</span>
-							<span class="year">2014</span>
-							<span class="time">8:00 PM</span>
-						</time>
-
-						<div class="info">
-							<h2 class="title">Mouse0270's 24th Birthday!</h2>
-							<p class="desc">Bar Hopping in Erie, Pa.</p>
-				
-						</div>
-						<div class="social">
-							<ul>
-								<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-								<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-								<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-							</ul>
-						</div>
-					</li>
-
-					<li>
-						<time datetime="2014-07-31 1600">
-							<span class="day">31</span>
-							<span class="month">Jan</span>
-							<span class="year">2014</span>
-							<span class="time">4:00 PM</span>
-						</time>
-						<div class="info">
-							<h2 class="title">Disney Junior Live On Tour!</h2>
-							<p class="desc"> Pirate and Princess Adventure</p>
-			
-						</div>
-						<div class="social">
-							<ul>
-								<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-								<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-								<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-							</ul>
-						</div>
-                    </li>
-                    -->
+                   
                 </ul>
-                <!--nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                      
-                      <li style="cursor : pointer"  class="page-item"><a  class="page-link" (click)="prviousp(page-1)" *ngIf="!previousDisabled" >Previous</a></li>
-                      <li style="cursor : pointer" *ngFor="let index of previous" class="page-item" ><a class="page-link" (click)="previousp(index)" >{{ index }}</a></li>
-                      <li style="cursor : pointer"  class="page-item" ><a class="page-link" style="background-color: green" >{{ page }}</a></li>
-                      <li style="cursor : pointer" *ngFor="let index of next" class="page-item" ><a class="page-link" (click)="nextp(index)" >{{ index }}</a></li>
-                      <li style="cursor : pointer" class="page-item"><a class="page-link" (click)="nxtp(page+1)"  >Next</a></li>
-                    </ul>
-				  </nav-->
-				  
-				  <!-- pager -->
+               
 				  <nav aria-label="Page navigation example">
 				  <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
 					<li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-						<a class="page-link" (click)="setPage(1)">&laquo;</a>
+						<a style="cursor : pointer" class="page-link" (click)="setPage(1)">&laquo;</a>
 					</li>
 					<li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
-						<a class="page-link" (click)="setPage(pager.currentPage - 1)">&lt;</a>
+						<a style="cursor : pointer" class="page-link" (click)="setPage(pager.currentPage - 1)">&lt;</a>
 					</li>
 					<li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-						<a class="page-link" (click)="setPage(page)">{{page}}</a>
+						<a style="cursor : pointer" class="page-link" (click)="setPage(page)">{{page}}</a>
 					</li>
 					<li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-						<a class="page-link" (click)="setPage(pager.currentPage + 1)">&gt;</a>
+						<a style="cursor : pointer" class="page-link" (click)="setPage(pager.currentPage + 1)">&gt;</a>
 					</li>
 					<li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-						<a class="page-link" (click)="setPage(pager.totalPages)">&raquo;</a>
+						<a style="cursor : pointer" class="page-link" (click)="setPage(pager.totalPages)">&raquo;</a>
 					</li>
 				</ul>
 			</nav>
@@ -126,8 +51,8 @@
 			</div>
 			<div class="col-md-2">
 				
-				<select (change)="listen()" [(ngModel)]="model" name="choice">
-					<option *ngFor="let item of selection" [value]="item">{{item}}</option>
+				<select style="cursor: pointer" (change)="listen()" [(ngModel)]="model" name="choice">
+					<option style="cursor: pointer" *ngFor="let item of selection" [value]="item">{{item}}</option>
 				</select>
 
 			</div>
