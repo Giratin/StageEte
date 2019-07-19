@@ -319,7 +319,7 @@ const paginate = ({ page, pageSize }) => {
 
  
  users.post('/count/:id', (req,res)=>{
-
+  console.log("mochma fel count")
   console.log(req.params)
 
     User.findAll({
@@ -327,14 +327,17 @@ const paginate = ({ page, pageSize }) => {
       where : { entreprise_id : req.params.id }
     }).then((count)=>{
       if(count){
+		  console.log("count for id  :: " + req.params.id + " is : "  + count.dataValues );
         res.json(count)
       }
     })
  })
 
  users.post('/all' , (req,res)=>{
+  console.log("le mochkla moush fel count")
+   console.log(req.body)
   var page = req.body.page;
-  var pageSize = 3;
+  var pageSize = req.body.number;
   User.findAll(
     paginate({ page, pageSize })
   ).then((users)=>{

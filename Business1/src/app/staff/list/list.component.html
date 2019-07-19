@@ -2,7 +2,8 @@
     <div class="container">
 		<div class="row">
                 <div class="col-md-2"></div>
-			<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+			<!--div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]"-->
+			<div class="col-md-8">
 				<ul class="event-list">
 					<li *ngFor="let user of users" >
 						<time datetime="2014-07-20">
@@ -90,16 +91,45 @@
                     </li>
                     -->
                 </ul>
-                <nav aria-label="Page navigation example">
+                <!--nav aria-label="Page navigation example">
                     <ul class="pagination">
                       
-                      <li style="cursor : pointer"  class="page-item"><a  class="page-link" (click)="nextp(page-1)" *ngIf="!previousDisabled" >Previous</a></li>
+                      <li style="cursor : pointer"  class="page-item"><a  class="page-link" (click)="prviousp(page-1)" *ngIf="!previousDisabled" >Previous</a></li>
                       <li style="cursor : pointer" *ngFor="let index of previous" class="page-item" ><a class="page-link" (click)="previousp(index)" >{{ index }}</a></li>
                       <li style="cursor : pointer"  class="page-item" ><a class="page-link" style="background-color: green" >{{ page }}</a></li>
                       <li style="cursor : pointer" *ngFor="let index of next" class="page-item" ><a class="page-link" (click)="nextp(index)" >{{ index }}</a></li>
-                      <li style="cursor : pointer" class="page-item"><a class="page-link" (click)="nextp(page+1)"  >Next</a></li>
+                      <li style="cursor : pointer" class="page-item"><a class="page-link" (click)="nxtp(page+1)"  >Next</a></li>
                     </ul>
-                  </nav>
+				  </nav-->
+				  
+				  <!-- pager -->
+				  <nav aria-label="Page navigation example">
+				  <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-center">
+					<li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+						<a class="page-link" (click)="setPage(1)">&laquo;</a>
+					</li>
+					<li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+						<a class="page-link" (click)="setPage(pager.currentPage - 1)">&lt;</a>
+					</li>
+					<li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+						<a class="page-link" (click)="setPage(page)">{{page}}</a>
+					</li>
+					<li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+						<a class="page-link" (click)="setPage(pager.currentPage + 1)">&gt;</a>
+					</li>
+					<li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+						<a class="page-link" (click)="setPage(pager.totalPages)">&raquo;</a>
+					</li>
+				</ul>
+			</nav>
+
+			</div>
+			<div class="col-md-2">
+				
+				<select (change)="listen()" [(ngModel)]="model" name="choice">
+					<option *ngFor="let item of selection" [value]="item">{{item}}</option>
+				</select>
+
 			</div>
 		</div>
 	</div>
