@@ -1,9 +1,6 @@
 const Sequelize = require("sequelize")
 const db = require("../database/db")
 
-
-const User = require('../models/User')
-
 Entrprise = db.sequelize.define(
     'entreprise',
     {
@@ -38,8 +35,5 @@ Entrprise = db.sequelize.define(
     }
 )
 
-/*
-Entrprise.hasMany(User, {as : 'user_id'})
-*/
 module.exports = Entrprise;
 
