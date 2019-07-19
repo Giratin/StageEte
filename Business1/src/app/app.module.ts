@@ -27,6 +27,7 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { ShowProductComponent } from './product/show-product/show-product.component';
 import { ListProductComponent } from './product/list-product/list-product.component';
+import { BrassOmmekComponent } from './brass-ommek/brass-ommek.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ListProductComponent } from './product/list-product/list-product.compon
     ProfileComponent,
     AddProductComponent,
     ShowProductComponent,
-    ListProductComponent
+    ListProductComponent,
+    BrassOmmekComponent
   ],
   imports: [
     BrowserModule,
