@@ -24,6 +24,7 @@ import { AddComponent } from './staff/add/add.component';
 import { ListComponent } from './staff/list/list.component';
 import { DetailsComponent } from './staff/details/details.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { AddProductComponent } from './product/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ProfileComponent } from './user/profile/profile.component';
     AddComponent,
     ListComponent,
     DetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
