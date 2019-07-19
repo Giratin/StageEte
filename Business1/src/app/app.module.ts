@@ -25,6 +25,8 @@ import { ListComponent } from './staff/list/list.component';
 import { DetailsComponent } from './staff/details/details.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
+import { ShowProductComponent } from './product/show-product/show-product.component';
+import { ListProductComponent } from './product/list-product/list-product.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { AddProductComponent } from './product/add-product/add-product.component
     ListComponent,
     DetailsComponent,
     ProfileComponent,
-    AddProductComponent
+    AddProductComponent,
+    ShowProductComponent,
+    ListProductComponent
   ],
   imports: [
     BrowserModule,

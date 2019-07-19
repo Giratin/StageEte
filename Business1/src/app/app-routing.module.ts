@@ -8,6 +8,9 @@ import { AddComponent } from './staff/add/add.component';
 import { ListComponent } from './staff/list/list.component';
 import { DetailsComponent } from './staff/details/details.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { AddProductComponent } from './product/add-product/add-product.component';
+import { ListProductComponent } from './product/list-product/list-product.component';
+import { ShowProductComponent } from './product/show-product/show-product.component';
 
 const routes: Routes = [
   { path : '' , component : HomeComponent },
@@ -29,6 +32,14 @@ const routes: Routes = [
       { path : 'add', component: AddComponent },
       { path : 'list', component: ListComponent },
       { path : 'details', component: DetailsComponent },
+    ]
+  },
+  { 
+    path : 'product' , 
+    children : [
+      { path : 'add', component: AddProductComponent },
+      { path : 'list', component: ListProductComponent },
+      { path : 'show', component: ShowProductComponent },
     ]
   },
   
