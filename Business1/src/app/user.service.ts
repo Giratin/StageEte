@@ -33,6 +33,18 @@ export class UserService {
     });
   }
 
+  public showList1(id : object) : Observable<any>{
+    return this.http.post(this.url + '/user/list' , id);
+  }
+
+  public showList(id : object) : Observable<any>{
+    return this.http.post(this.url + '/user/all' , id);
+  }
+
+  public getCount(id : number) : Observable<any>{
+    return this.http.post(this.url + '/user/count/'+id , null );
+  }
+
   
 
 }

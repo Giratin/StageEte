@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
 import { AgmCoreModule } from '@agm/core'
+import {NgxPaginationModule} from 'ngx-pagination';
 //import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 
 
@@ -47,7 +48,8 @@ import { ProfileComponent } from './user/profile/profile.component';
     FormsModule, ReactiveFormsModule,
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyD6b96x_ZIWu_y06zR3J7R6orVu0k_MxLU'
-    })
+    }),
+    NgxPaginationModule
     //InternationalPhoneNumberModule
   ],
   providers: [],

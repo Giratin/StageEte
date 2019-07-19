@@ -242,11 +242,12 @@ users.post('/addstaff', (req, res) => {
       })
 })
 
-users.get('/list', (req , res)=>{
+users.post('/list', (req , res)=>{
+  console.log(req.body)
     User.findAll({
       where : [
         {role : "livreur"},
-        {entreprise : req.body.entreprise_id}
+        {entreprise_id : req.body.entreprise_id}
       ]
     }).then((user)=>{
       if(user){
@@ -304,5 +305,44 @@ users.post('/createIdentifier', (req,res)=>{
     }
   })
 })
+
+const paginate = ({ page, pageSize }) => {
+  const offset = parseInt(page) * parseInt(pageSize)
+  const limit =  parseInt(pageSize)
+ 
+  return {
+    offset,
+    limit,
+  }
+ }
+
+
+ 
+ users.post('/count/:id', (req,res)=>{
+
+  console.log(req.params)
+
+    User.findAll({
+      attributes: ['id', [Sequelize.fn('count', Sequelize.col('id')), 'count']],
+      where : { entreprise_id : req.params.id }
+    }).then((count)=>{
+      if(count){
+        res.json(count)
+      }
+    })
+ })
+
+ users.post('/all' , (req,res)=>{
+  var page = req.body.page;
+  var pageSize = 3;
+  User.findAll(
+    paginate({ page, pageSize })
+  ).then((users)=>{
+    if(users){
+      res.json(users)
+    }
+  })
+
+ })
 
 module.exports = users
