@@ -1,9 +1,12 @@
 
     <div class="container">
 		<div class="row">
-                <div class="col-md-2"></div>
+                <div class="col-md-2">
+					<a routerLink="/staff/add" class="btn btn-success"><i class="fa fa-plus-square"></i> Add </a>
+				</div>
 			<!--div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]"-->
 			<div class="col-md-8">
+				<h1 style="text-align: center; margin-bottom : 15px">List of employees</h1>
 				<ul class="event-list">
 					<li *ngFor="let user of users" >
 						<time datetime="2014-07-20">
@@ -50,8 +53,8 @@
 
 			</div>
 			<div class="col-md-2">
-				
-				<select style="cursor: pointer" (change)="listen()" [(ngModel)]="model" name="choice">
+				<label for="" style="font-weight: 500;">Per page: </label>
+				<select style="cursor: pointer; border-radius: 5px;" (change)="listen()" [(ngModel)]="model" name="choice">
 					<option style="cursor: pointer" *ngFor="let item of selection" [value]="item">{{item}}</option>
 				</select>
 

@@ -14,14 +14,9 @@
                     <ul class="nav navbar-nav navbar-right" style="display: inline">
                         <li><a class="hvr-underline-from-center active" routerLink="/">Home</a></li>
                         <li><a href="services.html" class="hvr-underline-from-center">Services</a></li>
-                        <li><a routerLink="/team" class="hvr-underline-from-center scroll scroll">Team</a></li>
-                        <li><a href="gallery.html" class="hvr-underline-from-center">Gallery</a></li>
-                        <li><a href="#" data-toggle="dropdown"><span data-hover="ShortCodes">Short Codes</span><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="icons.html"><span data-hover="Icons">Icons</span></a></li>
-                                <li><a href="typography.html"><span data-hover="Typograpghy">Typograpghy</span></a></li>
-                            </ul>
-                        </li>	
+                        <li><a *ngIf="auth.isLoggedIn()" routerLink="/staff/list" class="hvr-underline-from-center scroll scroll">Team</a></li>
+                        <li><a routerLink="/entreprise/" *ngIf="auth.getUserDetails().role === 'owner'" class="hvr-underline-from-center">{{auth.getUserDetails().role}}</a></li>
+                        
                         <li>
                             
                             <a *ngIf="!auth.isLoggedIn()" routerLink="/user/login" class="hvr-underline-from-center">Login</a>

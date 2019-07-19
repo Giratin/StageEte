@@ -11,15 +11,13 @@ import { PaginationService } from 'src/app/services/pagination.service';
 })
 export class ListComponent implements OnInit {
 
-
-
   users : [];
   count : number = 0;
   page =1;
-  model = 1;
+  model =2;
   pager: any = {};
 
-  selection = ["1", "2", "3", "4" ,"5" , "10"]
+  selection = ["2", "3", "4" ,"5" , "10"]
   constructor(private auth : AuthenticationService, private router : Router, private userService : UserService, private pagerService: PaginationService) {
  
     this.userService.getCount(this.auth.getUserDetails().entreprise_id).subscribe((res)=>{
