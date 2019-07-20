@@ -18,6 +18,8 @@ export interface UserDetails {
   role: string
   password: string
   entreprise_id : number
+  country : string
+  state : string
   exp: number
   iat: number
 }
@@ -36,6 +38,8 @@ export interface TokenPayload {
   role: string
   password: string
   entreprise_id : number
+  country : string
+  state : string
 }
 
 

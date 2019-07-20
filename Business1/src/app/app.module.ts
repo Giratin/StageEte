@@ -4,6 +4,7 @@ import { Module as StripeModule } from "stripe-angular"
 import { HttpClientModule }  from "@angular/common/http"
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 import { CarouselModule, WavesModule } from 'angular-bootstrap-md'
@@ -43,7 +44,8 @@ import { ListProductComponent } from './product/list-product/list-product.compon
     ProfileComponent,
     AddProductComponent,
     ShowProductComponent,
-    ListProductComponent
+    ListProductComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { ListProductComponent } from './product/list-product/list-product.compon
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyD6b96x_ZIWu_y06zR3J7R6orVu0k_MxLU'
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    
     //InternationalPhoneNumberModule
   ],
   providers: [],

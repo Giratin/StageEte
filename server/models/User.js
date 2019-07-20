@@ -37,10 +37,19 @@ module.exports = db.sequelize.define(
              type: Sequelize.STRING
  
          },
+         country :{
+             type : Sequelize.STRING
+         },
+         city : {
+             type: Sequelize.STRING
+         },
         password: {
             type: Sequelize.STRING
         },
         registration: {
+            type: Sequelize.STRING
+        },
+        token: {
             type: Sequelize.STRING
         },
         entreprise_id: {

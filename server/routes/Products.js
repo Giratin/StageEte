@@ -9,10 +9,43 @@ const Entreprise = require('../models/Entreprise')
 const Product = require('../models/Product')
 products.use(cors())
 
+const path = require('path');
+const multer = require('multer');
+const bodyParser = require('body-parser')
+
+const DIR = './uploads';
+
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
+    }
+});
+let upload = multer({storage: storage});
 
 process.env.SECRET_KEY = 'secret'
 
+
+products.post('/upload',upload.single('photo'), function (req, res) {
+    if (!req.file) {
+        console.log("No file received");
+        return res.send({
+          success: false
+        });
+    
+      } else {
+        console.log('file received');
+        return res.send({
+          success: true,
+          'name' : req.file
+        })
+      }
+});
+
 products.post('/create', (req,res)=>{
+    console.log("here i am create product ")
     var product ={
         wording : req.body.wording,
         price : req.body.price,
@@ -21,10 +54,14 @@ products.post('/create', (req,res)=>{
         fabDate : req.body.fabDate,
         expDate : req.body.expDate,
         category : req.body.category,
-        entreprise_id : req.body.entreprise_id
+        image : req.body.image,
+        entreprise_id : req.body.entreprise_id,
     }
 
-    Product.create(product).then((product)=>{
+    console.log(req.body)
+
+   // res.sendStatus(200);
+   /* Product.create(product).then((product)=>{
         if(product){
             res.json(product)
         }else{
@@ -40,7 +77,7 @@ products.post('/create', (req,res)=>{
             'status' : 'error',
             'message' : err
         })
-    })
+    })*/
 })
 
 products.post('/update/:id', (req,res)=>{

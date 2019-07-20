@@ -30,6 +30,9 @@ Product = db.sequelize.define(
         category: {
             type: Sequelize.STRING
         },
+        image: {
+            type: Sequelize.STRING
+        },
         entreprise_id: {
             type: Sequelize.INTEGER
         }

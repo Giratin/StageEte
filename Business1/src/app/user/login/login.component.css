@@ -28,3 +28,16 @@
 .signup:hover{
     background: #23B684;
 }
+
+
+.hvr-shutter-in-vertical:disabled{
+    background-color: #d47281;
+    cursor: no-drop;
+}
+
+.alert-error{
+    background-color: #f76673;
+    border-color: #e01f3d;
+    color: #ffffff;
+    text-align: center;
+}

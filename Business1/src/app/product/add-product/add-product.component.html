@@ -1,1 +1,26 @@
-<p>add-product works!</p>
+<div class="container" style="margin-top: 50px; margin-bottom: 50px">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                    <form (submit)="create()">
+                            <input class="form-control" type="text" [(ngModel)]="product.wondring" name="wondring" placeholder="name">
+                            <input class="form-control" type="text" [(ngModel)]="product.price" name="price" placeholder="price">
+                            <input class="form-control" type="text" [(ngModel)]="product.description" name="description" placeholder="description">
+                            <input class="form-control" type="text" [(ngModel)]="product.category" name="category" placeholder="category">
+                            <br/>
+                            <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+                                <button type="button" class="btn btn-success btn-s" 
+                                (click)="uploader.uploadAll()" 
+                                [disabled]="!uploader.getNotUploadedItems().length" >
+                                    Upload an Image
+                                </button>
+                                <br/>
+                                <input type="submit" value="send" class="btn btn-success">
+                        </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    
+    
+
+</div>

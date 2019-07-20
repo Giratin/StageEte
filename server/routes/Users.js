@@ -5,15 +5,14 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
-const cookieParser  = require('cookie-parser');
 
 const User = require('../models/User')
 const Entreprise = require('../models/Entreprise')
 const uniqueUsername = require('../models/User')
 users.use(cors())
 
-
 process.env.SECRET_KEY = 'secret'
+
 
 users.post('/register', (req, res) => {
   const userData = {
@@ -23,7 +22,9 @@ users.post('/register', (req, res) => {
     phone: req.body.phone,
     adress : req.body.adress,
     email : req.body.email,
-    role : req.body.role
+    role : req.body.role,
+    city : req.body.city,
+    country : req.body.country
   }
 
   User.findOne({
@@ -151,6 +152,8 @@ users.post('/update', (req, res)=>{
                 { username : req.body.username } ,
                 { name : req.body.name } ,
                 { lname : req.body.lname } ,
+                { coutry : req.body.country },
+                { city : req.body.city },
                 { where : {id : decoded.id}}
               )
               res.json(user)
@@ -164,6 +167,8 @@ users.post('/update', (req, res)=>{
               { username : req.body.username } ,
               { name : req.body.name } ,
               { lname : req.body.lname } ,
+              { coutry : req.body.country },
+              { city : req.body.city },
               { where : {id : decoded.id}}
               
             )
@@ -197,6 +202,8 @@ users.post('/addstaff', (req, res) => {
       email : userReq.email,
       role : userReq.role,
       entreprise_id : userReq.entreprise_id,
+      country : userReq.country,
+      city : userReq.city,
       registration : userReq.password,
     }
 

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
 
-  userIncorrect : boolean = true;
+  userIncorrect : boolean = false;
 
   credentials: TokenPayload = {
     id : 0,
@@ -23,7 +23,9 @@ export class LoginComponent implements OnInit {
     phone : "",
     role : "",
     adress : "",
-    password : ""
+    password : "",
+    country : "",
+    state : ""
   };
 
   constructor(private auth : AuthenticationService, private router: Router) {
@@ -40,10 +42,11 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.credentials).subscribe((res)=>{
       if(this.auth.isLoggedIn()){
         this.router.navigateByUrl('/')
-        this.userIncorrect = true;
+        this.userIncorrect = false;
         console.log("correct")
       }else{
-        this.userIncorrect = false;
+        this.userIncorrect = true;
+        
         console.log("incorrect")
       }
 

@@ -29,6 +29,9 @@
                     <div *ngIf="!emailControl.prestine && !emailControl.dirty && emailControl.touched || emailControl.invalid && emailControl.touched" class="alert alert-error">Email is required</div>
                     <div class="alert alert-error" *ngIf="emailDuplicated">This email has been already used</div>
 
+                    <select class="mod" [(ngModel)]="credentials.state" name="state">
+                        <option class="opt" *ngFor="let item of cities" value="">{{ item.name }}</option>
+                    </select>
 
                     <input type="password" class="password"  [(ngModel)]="credentials.password" #passwordControl="ngModel" name="password" placeholder="Password" required>
                     <div *ngIf="!passwordControl.prestine && !passwordControl.dirty && passwordControl.touched || passwordControl.invalid && passwordControl.touched" class="alert alert-error">Password is required !</div>
