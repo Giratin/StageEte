@@ -28,6 +28,8 @@ export class ShowProductComponent implements OnInit {
     entreprise_id : 0
   } 
 
+  //nebdew min hén li awalan lazem na3tiha essm 'Alias" wel upload yssir à part jemlla wahdaaaa min ay requête 
+
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
 
   constructor(private prod: ProductService, private http : HttpClient) { }
@@ -40,6 +42,7 @@ export class ShowProductComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
          //console.log('ImageUpload:uploaded:', item, status, response);
 
+         //une fois yenzel 3al boutton upload image c bn tet3ada lel serveur w lhén 9a3Ad nrécupéri fel essm li zed'ha fel serveur 5ater betbi3a lazem il image nbadlilha essm'ha 9bal il upload sinon tssir mochkla kif yebdew assémi kifkif
 
          var image = JSON.parse(response);
 
@@ -58,6 +61,7 @@ export class ShowProductComponent implements OnInit {
 
 
     this.product.image = this.imagetoStore;
+    //ba3ad essm il image li tzedet n'ajoutih fel objet product w enfin neb3ath il request post lil serveur bch ya3ml ajout fel database lel données kémlinn
     console.log(this.product);
 
     //console.log(this.imagetoStore["name"]["filename"])
