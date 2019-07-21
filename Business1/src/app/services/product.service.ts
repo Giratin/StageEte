@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { ThrowStmt } from '@angular/compiler';
 
 
 
@@ -31,6 +32,10 @@ export class ProductService {
 
   public createProduct(prod : ProductDetails)  : Observable<any> {
     return this.http.post(this.url+"/product/create", prod);
+  }
+
+  public searchProduct(prod : object) : Observable<any>{
+    return this.http.post('/product/search/ent', prod);
   }
 
 }
