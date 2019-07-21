@@ -14,6 +14,9 @@ export class ShowProductComponent implements OnInit {
 
  
 
+  public imagePath;
+  imgURL: any;
+  public message: string;
 
   product : ProductDetails = {
     id : 0,
@@ -30,10 +33,13 @@ export class ShowProductComponent implements OnInit {
 
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
 
-  constructor(private prod: ProductService, private http : HttpClient) { }
+  constructor(private prod: ProductService, private http : HttpClient) { 
+    this.imgURL = 'assets/images/nopreview-available.jpg'
+  }
 
 
   imagetoStore : string = "";
+  preview : string = "";
 
   ngOnInit() {
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
@@ -43,29 +49,56 @@ export class ShowProductComponent implements OnInit {
 
          var image = JSON.parse(response);
 
-         this.imagetoStore = image["name"]['filename']
-        // console.log()
+         this.imagetoStore = image["name"]['filename'];
+         this.product.image =this.imagetoStore;
+         this.prod.createProduct(this.product).subscribe((res)=>{
+          console.log(res)
+        })
         
-        // console.log("upload success")
-      // console.log(this.imagetoStore)
-
-        // console.log("upload success")
-         //alert('File uploaded successfully');
+         console.log(this.imagetoStore);
     };    
   }
 
   create(){
 
+    console.log("calling create methode")
 
-    this.product.image = this.imagetoStore;
-    console.log(this.product);
+    console.log(this.imagetoStore)
+    //if(this.imagetoStore){
+     // this.product.image = this.imagetoStore;
+      console.log(this.product);
+      
+   // }
+
+    
 
     //console.log(this.imagetoStore["name"]["filename"])
     
-    this.prod.createProduct(this.product).subscribe((res)=>{
-      console.log(res)
-    })
+   
     //this.http.post('http://localhost:5000/product/create', this.product);
   }
+
+ 
+
+
+  updatePreview(files) {
+    if (files.length === 0)
+      return;
+ 
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = "Only images are supported.";
+      return;
+    }
+ 
+    var reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]); 
+    reader.onload = (_event) => { 
+      this.imgURL = reader.result; 
+    }
+  }
+
+ 
 
 }
