@@ -4,6 +4,8 @@ const cors = require('cors')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
+const fs = require('fs')
+
 const User = require('../models/User')
 const Entreprise = require('../models/Entreprise')
 const Product = require('../models/Product')
@@ -58,10 +60,7 @@ products.post('/create', (req,res)=>{
         entreprise_id : req.body.entreprise_id,
     }
 
-    console.log(req.body)
-
-   // res.sendStatus(200);
-   /* Product.create(product).then((product)=>{
+    Product.create(product).then((product)=>{
         if(product){
             res.json(product)
         }else{
@@ -77,7 +76,7 @@ products.post('/create', (req,res)=>{
             'status' : 'error',
             'message' : err
         })
-    })*/
+    })
 })
 
 products.post('/update/:id', (req,res)=>{
@@ -90,6 +89,7 @@ products.post('/update/:id', (req,res)=>{
         fabDate : req.body.fabDate,
         expDate : req.body.expDate,
         category : req.body.category,
+        image : req.body.image,
         entreprise_id : req.body.entreprise_id
     }
 
@@ -99,6 +99,13 @@ products.post('/update/:id', (req,res)=>{
         }
     }).then((produit)=>{
         if(produit){
+
+            if(produit.image != product.image){
+                fs.unlink( DIR + "/"+ produit.image , function (err) {
+                    if (err) throw err;
+                });
+            }
+
             produit.update(product).then((product)=>{
                 if(product){
                     res.json(product)
@@ -126,11 +133,12 @@ products.post('/update/:id', (req,res)=>{
     }).catch((err)=>{
         res.json({
             'id' : product.id,
-            'status' : 'error',
+            'status' : 'error database',
             'message' : err
         })
     }) 
 })
+
 
 products.post('/delete/:id' , (req,res)=>{
     var id = req.params.id;
@@ -140,6 +148,12 @@ products.post('/delete/:id' , (req,res)=>{
         }
     }).then((product)=>{
         if(product){
+            fs.unlink( DIR + "/"+ product.image , function (err) {
+                if (err) throw err;
+                // if no error, file has been deleted successfully
+                console.log('File deleted!');
+            });
+            console.log("unlincked")
             product.destroy();
             res.send({
                 'id' : id,
@@ -154,6 +168,7 @@ products.post('/delete/:id' , (req,res)=>{
             })
         }
     }).catch((err)=>{
+        console.log(err)
         res.json({
             'id' : '0',
             'status' : 'fatal',
@@ -162,12 +177,51 @@ products.post('/delete/:id' , (req,res)=>{
     })
 })
 
-products.post('/list' , (req,res)=>{
+products.post('/list/myproducts' , (req,res)=>{
     var entreprise_id = req.body.entreprise_id;
     Product.findAll({
         where : {
             entreprise_id : entreprise_id
         }
+    }).then((products)=>{
+        if(products){
+            res.json(products)
+        }else{
+            res.json({
+                'id' : 0,
+                'status' : "empty",
+                'message' : 'empty'
+            })
+        }
+    }).catch((err)=>{
+        res.json({
+            'id' : 0,
+            'status' : "fatal",
+            'message' : err
+        })
+    })
+})
+
+products.post('/search/ent' , (req,res)=>{
+    var entreprise_id = req.body.entreprise_id;
+    var looking = req.body.search
+    var category = req.body.category
+    Product.findAll({
+        where : [
+                    { entreprise_id : entreprise_id},
+                    { category : category},
+                    {
+                        [Op.or]: {
+                            wording : {
+                                [Op.like] : '%'+looking+'%'
+                            },
+                            image : {
+                                [Op.like] : '%'+looking+'%'
+                            },
+                        }
+                    }
+                ],
+        order : [['expDate', 'ASC']]
     }).then((products)=>{
         if(products){
             res.json(products)
