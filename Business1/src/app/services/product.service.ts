@@ -12,8 +12,8 @@ export interface ProductDetails {
   price : string
   description : string
   quantity : number
-  fabDate : Date
-  expDate : Date
+  fabDate : string
+  expDate : string
   category : string
   image : string
   entreprise_id : number

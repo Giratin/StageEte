@@ -15,8 +15,7 @@ export class ListProductComponent implements OnInit {
   produit : any =  {
     entreprise_id : "",
     looking : "",
-    category :"",
-    something:""
+    category :""
   }
   constructor(private prod : ProductService) { }
 

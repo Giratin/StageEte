@@ -67,11 +67,11 @@ export class AddComponent implements OnInit {
       entreprise_id : 0,
       email : "",
       phone : "",
+      country : "Tunisia",
+    state : "",
       role : "",
       adress : "",
       password : "",
-      country : "Tunisia",
-      state : "",
       exp: 0,
       iat: 0
     }

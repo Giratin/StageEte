@@ -1,16 +1,12 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 <div class="container register">
+    <form #addForm="ngForm" >
                 <div class="row">
                     <div class="col-md-3 register-left">
                         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
                         <h3>Welcome</h3>
                         <p>You have to login before, 
                               Only provider can add new product</p>
-                        <input type="submit" name="" value="Login"/><br/>
                     </div>
                     <div class="col-md-9 register-right">
                     
@@ -20,57 +16,39 @@
                                 <div class="row register-form">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Wondring *" name="wondring"  required />
+                                            <input type="text" class="form-control" placeholder="Wording *" name="wording"  required [(ngModel)]="product.wording" />
                                         </div>
 
-                                        <!--mat-form-field class="example-full-width">
-                                             <input matInput placeholder="Favorite food" >
-                                           </mat-form-field-->
-
+                                 
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Quantity *" name="quantity" required />
+                                            <input type="number" class="form-control" placeholder="Quantity *" name="quantity" required [(ngModel)]="product.quantity" />
                                         </div>
 
-<!-- ass zeyda e label ... 5atr tji yeser masta jarabtha... 5aliha hakeka ahayka tatla3 a la 1ere fois w ba3d on s'en fous :p non bch nbadalha ken t5aliha hekek
-mel e5er les interface mahomch synchrone jémla ... les inputs hedhom mahomch béhin wait nwarrik -->
+
 
                                         <div class="form-group">
-                                           <label for="">
-                                             <input  class="form-control" type="text" onfocus="(this.type='date')" name="fabDate" required > 
-                                             Date manufacture *
-                                           </label>
+                            
+                                             <input  class="form-control" type="text" onfocus="(this.type='date')" placeholder=" Date manufacture *" name="fabDate" required  [(ngModel)]="product.fabDate" > 
+                                         
                                           </div>
 
 
                                         <div class="form-group">
-                                            <input placeholder="Expiration date *" class="form-control" type="text" onfocus="(this.type='date')" name="expDate" required> 
+                                            <input class="form-control" type="text" onfocus="(this.type='date')" placeholder=" Expiration date *"  name="expDate" required [(ngModel)]="product.expDate"> 
                                         </div>
 
 
 
-                                        <div class="form-group">
-                                            <div class="maxl">
-                                             
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                     <div class="col-md-6">
 
 
                                           <div class="form-group">
-                                                <input type="number" class="form-control"  placeholder="Unit price *" name="price" required />
+                                                <input type="number" step="0.1" min="0" class="form-control"  placeholder="Unit price *" name="price" required [(ngModel)]="product.price"/>
                                             </div>
-
-                                      <!-- chuf les inputs lo5rin 5ir fel cas mte3na 5ater bootstrap lhné masset
-                                          import 8alet 3amlou nssit kifech fammech qlq dependecies t'habat'hom w t'importi'hom te3 mateiral angular
-                                          cdk w animations zeda behi moch mochkl tawa nbadlhom kima lo5rin sehel.. just tawa les input test7a9hom mawjoudin le5er bootstrap w css taw nrigulo kn 7abit te5dem l image w service 3la hadhika w ba3d nsal7ha entre temps n7adher lbe9yin wala stana nsal7ha lowel... 
-                                          ena c bn service 7Adhartu w ye5dem fih mochkla tef'ha mat9ala9ch jémla nrmlment behi mela het na3ml pull w tawa nriguel jawi 
-                                          la? cnx kil 5raaa :/ c bn .. mafhemt chay ... 
-                                          mazelt ki 3malt push ena 5edmti fammech ..
-                                          att n3awed na3mil push walaw ennu mazelt ki 3malt'ha behi
-                                    -->
                                         <div class="form-group">
-                                            <select class="form-control">
+                                            <select class="form-control" name="category" [(ngModel)]="product.category" >
                                                 <option class="hidden"  selected disabled>Please select your product category</option>
                                                 <option>drink</option>
                                                 <option>Fruits and vegetables</option>
@@ -84,9 +62,24 @@ mel e5er les interface mahomch synchrone jémla ... les inputs hedhom mahomch béh
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                             <textarea class="form-control"  placeholder="Description *" name="description" required ></textarea>
+                                             <textarea class="form-control"  placeholder="Description *" name="description" required [(ngModel)]="product.description"></textarea>
                                          </div>
-                                        <input type="submit" class="btnRegister"  value="Add"/>
+
+                                      
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <img [src]="imgURL" style="max-height: 160px" alt="">
+                                        <input type="file" name="photo" #file accept='image/*' (change)="updatePreview(file.files)" ng2FileSelect [uploader]="uploader" />
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <input type="submit" class="btnRegister"  value="Add"
+                                        (click)="uploader.uploadAll()" 
+                                        [disabled]="!uploader.getNotUploadedItems().length || addForm.invalid"/>
                                     </div>
                                 </div>
                             </div>
@@ -94,5 +87,11 @@ mel e5er les interface mahomch synchrone jémla ... les inputs hedhom mahomch béh
                                 </div>
                         
                 </div>
+
+            </div>
+        </form>
+           
+
+
 
             </div>
