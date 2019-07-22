@@ -203,29 +203,112 @@ products.post('/list/myproducts' , (req,res)=>{
 })
 
 products.post('/search/ent' , (req,res)=>{
-    var entreprise_id = req.body.entreprise_id;
+    //var entreprise_id = req.body.entreprise_id;
+    //var entreprise_id = ["1","2","3","4","5"];
+    var entreprise_id = ["5"];
     var looking = req.body.search
     var category = req.body.category
+
+    var cat = "category";
+
+    var city2 = "Tunis"
+
+    Entreprise.findAll({
+        where : {
+            city : city2
+        }
+    }).then((entreprises)=>{
+        if(entreprises)
+        //{
+            console.log(entreprises)
+            else{
+                console.log("nothing to show")
+            }
+           /* Product.findAll({
+                where : [
+                            { entreprise_id :
+                                   { [Op.and]: [
+                                       { [Op.ne] : [ null ] } ,
+                                       { [Op.in] : [entreprises.entreprise_id] }
+                                    ] }                        
+                            },
+                            {
+                                category : {
+                                    [Op.or]: [
+                                        { [Op.ne] : [ '' ] } , 
+                                        { [Op.eq] : [category] }
+                                     ] 
+                                }
+                            },
+                            {
+                                    wording : {
+                                        [Op.like] : '%'+looking+'%'
+                                    }
+                                
+                            }
+                        ],
+                order : [['expDate', 'ASC']]
+            }).then((products)=>{
+                if(products){
+                    console.log(products)
+                    res.json(products)
+                }else{
+                    console.log("nothing")
+                    res.json({
+                        'id' : 0,
+                        'status' : "empty",
+                        'message' : 'empty'
+                    })
+                }
+            }).catch((err)=>{
+                console.log(err)
+                res.json({
+                    'id' : 0,
+                    'status' : "fatal",
+                    'message' : err
+                })
+            })
+        }*/
+    })
+
+/*
+    if(req.body.entreprise_id === ''){
+        entreprise_id_con = null
+    }else{
+        console.log(req.body.entreprise_id)
+    }
+
+    console.log(req.body)
     Product.findAll({
         where : [
-                    { entreprise_id : entreprise_id},
-                    { category : category},
+                    { entreprise_id :
+                           { [Op.and]: [
+                               { [Op.ne] : [ null ] } ,
+                               { [Op.in] : [entreprise_id] }
+                            ] }                        
+                    },
                     {
-                        [Op.or]: {
+                        category : {
+                            [Op.or]: [
+                                { [Op.ne] : [ '' ] } , 
+                                { [Op.eq] : [category] }
+                             ] 
+                        }
+                    },
+                    {
                             wording : {
                                 [Op.like] : '%'+looking+'%'
-                            },
-                            image : {
-                                [Op.like] : '%'+looking+'%'
-                            },
-                        }
+                            }
+                        
                     }
                 ],
         order : [['expDate', 'ASC']]
     }).then((products)=>{
         if(products){
+            console.log(products)
             res.json(products)
         }else{
+            console.log("nothing")
             res.json({
                 'id' : 0,
                 'status' : "empty",
@@ -233,11 +316,18 @@ products.post('/search/ent' , (req,res)=>{
             })
         }
     }).catch((err)=>{
+        console.log(err)
         res.json({
             'id' : 0,
             'status' : "fatal",
             'message' : err
         })
+    })*/
+})
+
+products.post('/getAll', (req,res)=>{
+    Product.findAll().then((products)=>{
+        res.json(products)
     })
 })
 

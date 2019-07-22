@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService, ProductDetails } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-list-product',
@@ -10,11 +10,13 @@ export class ListProductComponent implements OnInit {
 
 
   showList : boolean = false;
+  list : ProductDetails[] ;
 
   produit : any =  {
-    entreprise_id : 0,
+    entreprise_id : "",
     looking : "",
-    search :""
+    category :"",
+    something:""
   }
   constructor(private prod : ProductService) { }
 
@@ -22,6 +24,14 @@ export class ListProductComponent implements OnInit {
   search : string = "";
   ngOnInit() {
     
+    this.produit.looking="";
+    this.prod.getAll().subscribe((res)=>{
+      // console.log(res)
+ 
+       this.list = res;
+       console.log(this.list)
+ 
+     })
   }
 
   show(){
@@ -33,6 +43,33 @@ export class ListProductComponent implements OnInit {
   searchProd($event){
     this.search = (<HTMLInputElement>event.target).value;
     console.log(this.search)
+    this.produit.search = this.search;
+
+    if(this.search == '')
+    {
+      this.prod.getAll().subscribe((res)=>{
+        // console.log(res)
+   
+         this.list = res;
+         console.log(this.list)
+   
+       })
+    }else{
+      
+    this.prod.searchProduct(this.produit).subscribe((res)=>{
+      // console.log(res)
+ 
+       this.list = res;
+       console.log(this.list)
+ 
+     })
+    }
+
+
+  }
+
+  hide(){
+    this.showList = false;
   }
   
   cities = [

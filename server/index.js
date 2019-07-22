@@ -21,6 +21,8 @@ app.use(
   })
 )
 
+app.use(express.static('uploads'))
+
 var Users = require('./routes/Users')
 var Entrprises = require('./routes/Entreprises')
 var Products = require('./routes/Products')

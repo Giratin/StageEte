@@ -341,18 +341,14 @@ const paginate = ({ page, pageSize }) => {
  })
 
  users.post('/all' , (req,res)=>{
-  console.log("le mochkla moush fel count")
-   console.log(req.body)
+
   var page = req.body.page;
   var pageSize = req.body.number;
 
   var offset = (parseInt(page) * parseInt(pageSize)) -pageSize
   var limit =  parseInt(pageSize)
 
-  console.log("offset " + offset)
-  console.log("limit " + limit)
   User.findAll({
-    //paginate({ page, pageSize }),
     limit,
     offset ,
     where: { entreprise_id : req.body.entreprise_id }

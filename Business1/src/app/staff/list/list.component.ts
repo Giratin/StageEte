@@ -20,15 +20,18 @@ export class ListComponent implements OnInit {
   selection = ["2", "3", "4" ,"5" , "10"]
   constructor(private auth : AuthenticationService, private router : Router, private userService : UserService, private pagerService: PaginationService) {
  
-    this.userService.getCount(this.auth.getUserDetails().entreprise_id).subscribe((res)=>{
-      this.count = Math.round(parseInt(res[0]["count"]));
-    })
-
-    this.userService.showList({'page' : this.page, 'number' : this.model, 'entreprise_id' : this.auth.getUserDetails().entreprise_id}).subscribe((res)=>{
-      console.log(res)
-      this.users = res;
-      this.setPage(1);
-    });
+    if(this.auth.isLoggedIn()){
+      this.userService.getCount(this.auth.getUserDetails().entreprise_id).subscribe((res)=>{
+        this.count = Math.round(parseInt(res[0]["count"]));
+      })
+  
+      this.userService.showList({'page' : this.page, 'number' : this.model, 'entreprise_id' : this.auth.getUserDetails().entreprise_id}).subscribe((res)=>{
+        console.log(res)
+        this.users = res;
+        this.setPage(1);
+      });
+    }
+    
 
    }
 

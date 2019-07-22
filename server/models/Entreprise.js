@@ -27,7 +27,9 @@ Entrprise = db.sequelize.define(
           },
           latitude: {
             type: Sequelize.STRING
-
+        },
+        city : {
+            type : Sequelize.STRING
         }
     },
     {

@@ -35,7 +35,12 @@ export class ProductService {
   }
 
   public searchProduct(prod : object) : Observable<any>{
-    return this.http.post('/product/search/ent', prod);
+    return this.http.post(this.url+'/product/search/ent', prod);
+  }
+  
+
+  public getAll() : Observable<any>{
+    return this.http.post(this.url+'/product/getAll', null);
   }
 
 }
