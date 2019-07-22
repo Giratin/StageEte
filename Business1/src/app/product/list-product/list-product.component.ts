@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService, ProductDetails } from 'src/app/services/product.service';
+import { HttpClient } from '@angular/common/http';
+import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-list-product',
@@ -11,13 +14,16 @@ export class ListProductComponent implements OnInit {
 
   showList : boolean = false;
   list : ProductDetails[] ;
+  selectedCity : string = 'all'
+  selectedCat : string = 'all'
 
   produit : any =  {
     entreprise_id : "",
     looking : "",
-    category :""
+    category :"all",
+    city : "all"
   }
-  constructor(private prod : ProductService) { }
+  constructor(private prod : ProductService, private http : HttpClient) { }
 
 
   search : string = "";
@@ -41,14 +47,13 @@ export class ListProductComponent implements OnInit {
 
   searchProd($event){
     this.search = (<HTMLInputElement>event.target).value;
-    console.log(this.search)
     this.produit.search = this.search;
-
+    console.log(this.produit)
     if(this.search == '')
     {
+
       this.prod.getAll().subscribe((res)=>{
         // console.log(res)
-   
          this.list = res;
          console.log(this.list)
    
@@ -70,7 +75,17 @@ export class ListProductComponent implements OnInit {
   hide(){
     this.showList = false;
   }
-  
+  cityChange($event){
+    this.selectedCity=(<HTMLOptionElement>event.target).value
+    this.produit.city = this.selectedCity;
+
+  }
+  catChange($event){
+    this.selectedCat=(<HTMLOptionElement>event.target).value
+    this.produit.category = this.selectedCat;
+    console.log(this.selectedCat)
+
+  }
   cities = [
     {
       "code": "12",
@@ -169,4 +184,14 @@ export class ListProductComponent implements OnInit {
       "name": "Zaghouan",
     }
   ]
+
+  categories=["drink",
+  "Fruits and vegetables",
+  "Cereals",
+  "Dairy products",
+  "Meat fish egg",
+  "Fatty products",
+  "Pasta",
+  "Pastry product",
+  "Other"]
 }

@@ -3,76 +3,71 @@
 
 <div class="container" style="margin-top: 40px; margin-bottom: 50px;" >
 	<div class="row">
-		<div class="col-md-12">
+        <div class="col-md-6"></div>
+		<div class="col-md-6">
             <div class="input-group" id="adv-search">
-                <input type="text" class="form-control" (keyup)="searchProd(event)" (click)="hide()" placeholder="Search for profuct" />
-
-                <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                        <div class="dropdown dropdown-lg">
-                            <button type="button" class="btn btn-default" (click)="show()">
-                                    <i class="fa fa-tasks"></i> &emsp; FILTER
-                            </button>
-                            
-                            <div *ngIf="showList" class="dropdown-menu dropdown-menu-right" role="menu" style="display: block">
-                                <form class="form-horizontal" role="form">
-                                  <div class="form-group">
-                                        <i class="fas fa-sliders-h"></i>
-                                    <label for="filter">Select a city</label>
-                                    <select class="form-control">
-                                        <option *ngFor="let city of cities" value="city.name" selected>{{city.name}}</option>
-                                    </select>
-                                  </div>
-                                  <div class="form-group">
-                                        <i class="fas fa-sliders-h"></i>
-                                    <label for="filter">Select a category</label>
-                                    <select class="form-control">
-                                        <option *ngFor="let city of cities" value="city.name" selected>{{city.name}}</option>
-                                    </select>
-                                  </div>
-
-                                </form>
+                <div class="input-group mb-3">
+                        <input type="text" class="form-control" (keyup)="searchProd(event)"  placeholder="Search for product" />
+                        <div class="input-group-append">
+                          <span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span>
+                          <div class="input-group-btn">
+                                <div class="btn-group" role="group">
+                                    <div class="dropdown dropdown-lg">
+                                        <button type="button" class="btn btn-default" (click)="show()">
+                                                <i class="fa fa-tasks"></i> &emsp; FILTER
+                                        </button>
+                                        
+                                        <div *ngIf="showList" class="dropdown-menu dropdown-menu-right" role="menu" style="display: block">
+                                            <form class="form-horizontal" role="form">
+                                              <div class="form-group">
+                                                    <i class="fas fa-sliders-h"></i>
+                                                <label for="filter">Select a city</label>
+                                                <select class="form-control" (change)="cityChange(event)">
+                                                    <option value="all" selected>All</option>
+                                                    <option *ngFor="let city of cities" value="{{city.name}}">{{city.name}}</option>
+                                                </select>
+                                              </div>
+                                              <div class="form-group">
+                                                    <i class="fas fa-sliders-h"></i>
+                                                <label for="filter">Select a category</label>
+                                                <select class="form-control" (change)="catChange(event)" >
+                                                        <option value="all" >All</option>
+                                                    <option *ngFor="let cat of categories" value="{{cat}}"  >{{cat}}</option>
+                                                </select>
+                                              </div>
+            
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                      </div>
+               
             </div>
           </div>
         </div>
 
 
-        <div class="row" style="margin-top: 50px" (click)="hide()">
-            <div *ngFor="let item of list" class="col-md-4" style="margin-bottom: 20px">
-
-                <div style="border: 1px solid #ccc; border-radius: 5px">
-                    <h2 style="text-align: center">{{ item.wording }} </h2>
-                    <img *ngIf="item.image" style="max-width: 300px" src="http://localhost:5000/{{item.image}}" alt="">
-                    <img *ngIf="!item.image" style="max-width: 300px" src="assets/images/nopreview-available.jpg" alt="">
-                    <div class="form-group">
-                        <button class="btn btn-success">Look</button>
-                        <button class="btn btn-primary">Buy</button>
-                    </div>
-                   
-                </div>
-
-            </div>
-        </div>
+        
 
 <!-- Team -->
-<section id="team" class="pb-5">
+<section id="team" class="pb-5" (click)="hide()">
     <div class="container">
         <h5 class="section-title h1">OUR PRODUCTS</h5>
         <div class="row">
             <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let prod of list">
                 <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                     <div class="mainflip">
                         <div class="frontside">
                             <div class="card">
                                 <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_01.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
+                                    <p><img *ngIf="prod.image != ''" class=" img-fluid" src="http://localhost:5000/{{prod.image}}" alt="card image">
+                                        <img *ngIf="prod.image == ''" class=" img-fluid" src="assets/images/nopreview-available.jpg" alt="card image">
+                                    </p>
+                                    <h4 class="card-title">{{prod.wording}}</h4>
+                                    <p class="card-text">{{prod.description}}.</p>
                                     <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                 </div>
                             </div>
@@ -80,8 +75,8 @@
                         <div class="backside">
                             <div class="card">
                                 <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
+                                    <h4 class="card-title">{{prod.wording}}</h4>
+                                    <p class="card-text">{{prod.description}}.</p>
                                    
                                 </div>
                             </div>
@@ -90,162 +85,7 @@
                 </div>
             </div>
             <!-- ./Team member -->
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_02.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_03.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_04.jpg" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_05.png" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Team member -->
-            <!-- Team member -->
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                    <div class="mainflip">
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src="https://sunlimetech.com/portfolio/boot4menu/assets/imgs/team/img_06.jpg" alt="card image"></p>
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.</p>
-                                    <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="backside">
-                            <div class="card">
-                                <div class="card-body text-center mt-4">
-                                    <h4 class="card-title">Sunlimetech</h4>
-                                    <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                    <ul class="list-inline">
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="#">
-                                                <i class="fa fa-facebook"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="#">
-                                                <i class="fa fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="#">
-                                                <i class="fa fa-skype"></i>
-                                            </a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a class="social-icon text-xs-center" target="_blank" href="#">
-                                                <i class="fa fa-google"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ./Team member -->
+            
 
         </div>
     </div>

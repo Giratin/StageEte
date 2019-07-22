@@ -212,15 +212,57 @@ products.post('/search/ent' , (req,res)=>{
     var cat = "category";
 
     var city2 = "Tunis"
+     var city = req.body.city
 
+     if (city=='all'){
+         city=""
+     }
+     console.log(city)
     Entreprise.findAll({
         where : {
-            city : city2
+            city : {
+                [Op.or]:[
+                    { [Op.eq] : [city] },
+                    { [Op.eq]:[null]}
+                ]
+            }
         }
     }).then((entreprises)=>{
-        if(entreprises)
+        if(entreprises){
+          //  console.log()
+                    var e = JSON.parse(JSON.stringify(entreprises))
+                    var t = []
+            for(var i=0; i< e.length; i++){
+                var id = e[i].id
+                console.log(id)
+                t.push(id)
+            }
+            Product.findAll({
+                where:{
+                  
+                        entreprise_id:{
+                            [Op.or]:{
+                             [Op.in]:t,
+                             [Op.ne]:[null]
+                            }
+                        },
+
+                    
+                    
+                }
+            }).then((p)=>{
+                if(p){
+                    //console.log(p)
+                    res.json(p)
+                }else{
+                    console.log("nothing to show")
+                }
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
         //{
-            console.log(entreprises)
+            
             else{
                 console.log("nothing to show")
             }
