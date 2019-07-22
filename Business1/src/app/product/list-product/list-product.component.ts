@@ -14,7 +14,7 @@ export class ListProductComponent implements OnInit {
   produit : any =  {
     entreprise_id : 0,
     looking : "",
-    search :""
+    category :""
   }
   constructor(private prod : ProductService) { }
 
@@ -33,7 +33,15 @@ export class ListProductComponent implements OnInit {
   searchProd($event){
     this.search = (<HTMLInputElement>event.target).value;
     console.log(this.search)
-  }
+    this.produit.looking = this.search;
+    this.produit.entreprise_id = 4;
+
+
+    this.prod.searchProduct(this.produit).subscribe((res)=>{
+      console.log(res)
+    })
+
+  } 
   
   cities = [
     {

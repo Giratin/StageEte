@@ -24,15 +24,14 @@ export class ShowProductComponent implements OnInit {
     price : "",
     description : "",
     quantity : 0,
-    fabDate : new Date(),
-    expDate : new Date(),
+    fabDate: "",
+    expDate : "",
     category : "",
     image : "",
     entreprise_id : 0
   } 
 
-  //nebdew min hén li awalan lazem na3tiha essm 'Alias" wel upload yssir à part jemlla wahdaaaa min ay requête 
-
+ 
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
 
   constructor(private prod: ProductService, private http : HttpClient) { 
@@ -66,20 +65,8 @@ export class ShowProductComponent implements OnInit {
 
     console.log("calling create methode")
 
-<<<<<<< HEAD
     this.product.image = this.imagetoStore;
-    //ba3ad essm il image li tzedet n'ajoutih fel objet product w enfin neb3ath il request post lil serveur bch ya3ml ajout fel database lel données kémlinn
     console.log(this.product);
-=======
-    console.log(this.imagetoStore)
-    //if(this.imagetoStore){
-     // this.product.image = this.imagetoStore;
-      console.log(this.product);
-      
-   // }
-
-    
->>>>>>> 0b97d38ef5128394f45dc26dd475c0da9d3fa594
 
     //console.log(this.imagetoStore["name"]["filename"])
     

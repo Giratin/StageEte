@@ -72,8 +72,6 @@ export class AddComponent implements OnInit {
       role : "",
       adress : "",
       password : "",
-      country : "Tunisia",
-      state : "",
       exp: 0,
       iat: 0
     }

@@ -12,11 +12,7 @@
                             <img [src]="imgURL" id="image" alt="" style="max-width: 200px; height: 150px; display: block; margin: auto">
 
                             <input type="file" name="photo" #file accept='image/*' (change)="updatePreview(file.files)" ng2FileSelect [uploader]="uploader" />
-                                <!--button type="button" class="btn btn-success btn-s" 
-                                (click)="uploader.uploadAll()" 
-                                [disabled]="!uploader.getNotUploadedItems().length" >
-                                    Upload an Image
-                                </button-->
+                               
                                 <br/>
                                 <input type="submit"
                                  (click)="uploader.uploadAll()" 

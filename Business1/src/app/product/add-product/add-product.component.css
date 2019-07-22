@@ -96,3 +96,6 @@
     margin-bottom: -15%;
     color: #495057;
 }
+.btnRegister:disabled{
+    cursor: no-drop;
+}

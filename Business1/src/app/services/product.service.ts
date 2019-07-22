@@ -12,8 +12,8 @@ export interface ProductDetails {
   price : string
   description : string
   quantity : number
-  fabDate : Date
-  expDate : Date
+  fabDate : string
+  expDate : string
   category : string
   image : string
   entreprise_id : number
@@ -35,7 +35,7 @@ export class ProductService {
   }
 
   public searchProduct(prod : object) : Observable<any>{
-    return this.http.post('/product/search/ent', prod);
+    return this.http.post(this.url+'/product/search/ent', prod);
   }
 
 }
