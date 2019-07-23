@@ -202,6 +202,124 @@ products.post('/list/myproducts' , (req,res)=>{
     })
 })
 
+
+const searchParams = ({ id, category, search, limit , offset }) => {
+
+    if(category === 'all'){
+        return {
+            limit,
+            offset,
+            where : [
+                { wording : {
+                        [Op.like] : '%'+search+'%'
+                    }
+                },
+                { entreprise_id : {
+                        [Op.in] : id
+                    }
+                }
+            ]
+        }
+    }
+
+    return {
+        limit,
+        offset,
+        where :[
+            { category : category },
+            { wording : {
+                    [Op.like] : '%'+search+'%'
+                }
+            },
+            { entreprise_id : {
+                    [Op.in] : id
+                }
+            }
+        ]
+    }
+}
+
+
+const cityEntreprise = ({city}) =>{
+    if(city === 'all'){
+        console.log("all here")
+        return {
+            where : true
+        }
+    }
+    return {
+        where : {
+            city : city
+        }
+    }
+}
+
+
+
+
+products.post('/searchAll', (req,res)=>{
+
+
+    console.log(req.body)
+    var page = req.body.page;
+    var pageSize = req.body.number;
+
+    console.log(page)
+    var off = (parseInt(page) * parseInt(pageSize)) -pageSize
+    var lim =  parseInt(pageSize)
+
+    var city = req.body.city;
+    var category = req.body.category;
+    var keyWord = req.body.search;
+
+    if(keyWord === undefined)
+        keyWord = ""
+
+    Entreprise.findAll(cityEntreprise({city}))
+    .then((e)=>{
+        if(e){
+            var en = JSON.parse(JSON.stringify(e));
+            var t = []
+            
+            for(var i =0; i<en.length; i++){
+                var id = parseInt(en[i].id)
+                t.push(en[i].id.toString())               
+            }
+                        
+            return{
+                t,
+                category,
+                keyWord
+            }
+        }else{
+            res.send({
+                'entreprise' : 'error',
+                'status' : 404
+            })
+            console.log("404 entreprises")
+        }
+    }).then((r)=>{
+        
+        Product.findAndCountAll(searchParams({ id : r.t , category : r.category  , search : r.keyWord, limit : lim, offset : off }))
+            .then((p)=>{
+                if(p){
+                    console.log(p)
+                    res.json(p)
+                }else{
+                    res.send({
+                        'product' : 'error',
+                        'status' : 404
+                    })
+                    console.log("404 products")
+                }
+            }).catch((err)=>{
+                res.send(err)
+                console.log("eeeee",err)
+            })
+    })
+})
+
+/*
 products.post('/search/ent' , (req,res)=>{
     //var entreprise_id = req.body.entreprise_id;
     //var entreprise_id = ["1","2","3","4","5"];
@@ -266,7 +384,7 @@ products.post('/search/ent' , (req,res)=>{
             else{
                 console.log("nothing to show")
             }
-           /* Product.findAll({
+            Product.findAll({
                 where : [
                             { entreprise_id :
                                    { [Op.and]: [
@@ -310,7 +428,7 @@ products.post('/search/ent' , (req,res)=>{
                     'message' : err
                 })
             })
-        }*/
+        }
     })
 
 /*
@@ -364,8 +482,8 @@ products.post('/search/ent' , (req,res)=>{
             'status' : "fatal",
             'message' : err
         })
-    })*/
-})
+    })
+})*/
 
 products.post('/getAll', (req,res)=>{
     Product.findAll().then((products)=>{

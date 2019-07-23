@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService, ProductDetails } from 'src/app/services/product.service';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
+import { PaginationService } from 'src/app/services/pagination.service';
 
 
 @Component({
@@ -16,27 +17,31 @@ export class ListProductComponent implements OnInit {
   list : ProductDetails[] ;
   selectedCity : string = 'all'
   selectedCat : string = 'all'
+  page =1;
+  model = 3 ;
+  pager: any = {};
+  empty : boolean = false
+  count : number ;
 
   produit : any =  {
     entreprise_id : "",
     looking : "",
     category :"all",
-    city : "all"
+    city : "all",
+    page : '1',
+    number : '3'
   }
-  constructor(private prod : ProductService, private http : HttpClient) { }
+
+  selection = ["3", "4" ,"5" , "10"]
+
+  constructor(private prod : ProductService, private http : HttpClient, private pagerService: PaginationService) { }
+
 
 
   search : string = "";
   ngOnInit() {
     
-    this.produit.looking="";
-    this.prod.getAll().subscribe((res)=>{
-      // console.log(res)
- 
-       this.list = res;
-       console.log(this.list)
- 
-     })
+    this.setPage(1)
   }
 
   show(){
@@ -48,44 +53,65 @@ export class ListProductComponent implements OnInit {
   searchProd($event){
     this.search = (<HTMLInputElement>event.target).value;
     this.produit.search = this.search;
-    console.log(this.produit)
-    if(this.search == '')
-    {
 
-      this.prod.getAll().subscribe((res)=>{
-        // console.log(res)
-         this.list = res;
-         console.log(this.list)
-   
-       })
-    }else{
-      
-    this.prod.searchProduct(this.produit).subscribe((res)=>{
-      // console.log(res)
- 
-       this.list = res;
-       console.log(this.list)
- 
-     })
-    }
-
-
+    this.setPage(1);
+    /*this.prod.searchProduct(this.produit).subscribe((res)=>{
+       this.list = res; 
+     })*/
   }
+
+  setPage(page: number) {
+    
+    this.produit.page = page;
+    this.prod.searchProduct(this.produit).subscribe((res)=>{
+      this.list = res["rows"]; 
+
+      if(this.list.length === 0){
+        this.empty = true
+      }else{
+        this.empty = false
+      }
+      this.count = res["count"];
+      this.pager = this.pagerService.getPager(this.count, page, this.model);  
+      console.log(this.pager)
+
+    })
+  }
+
+  listen(){
+
+    console.log(this.model)
+    this.produit.number = this.model
+    this.setPage(1)
+  }
+
 
   hide(){
     this.showList = false;
   }
+
   cityChange($event){
     this.selectedCity=(<HTMLOptionElement>event.target).value
     this.produit.city = this.selectedCity;
 
+    this.setPage(1)
+    
+    /*this.prod.searchProduct(this.produit).subscribe((res)=>{
+      this.list = res;   
+    })*/
   }
+
   catChange($event){
     this.selectedCat=(<HTMLOptionElement>event.target).value
     this.produit.category = this.selectedCat;
-    console.log(this.selectedCat)
 
+    this.setPage(1)
+
+     /* this.prod.searchProduct(this.produit).subscribe((res)=>{
+         this.list = res;   
+       }) */
   }
+
   cities = [
     {
       "code": "12",
