@@ -11,6 +11,8 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { ListProductComponent } from './product/list-product/list-product.component';
 import { ShowProductComponent } from './product/show-product/show-product.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ViewComponent } from './user/entreprise/view/view.component';
 
 const routes: Routes = [
   { path : '' , component : HomeComponent },
@@ -23,7 +25,9 @@ const routes: Routes = [
   },
   { path : 'entreprise' ,
     children : [
-      { path : 'create' , component : EntrepriseComponent }
+      { path : 'create' , component : EntrepriseComponent },
+      { path : 'view' , component : ViewComponent },
+      { path : '' , component : ViewComponent },
     ]
   },
   { 
@@ -42,7 +46,7 @@ const routes: Routes = [
       { path : 'show', component: ShowProductComponent },
     ]
   },
-  
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

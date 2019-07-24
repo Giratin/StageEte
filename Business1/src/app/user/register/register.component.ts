@@ -26,11 +26,81 @@ export class RegisterComponent implements OnInit {
     entreprise_id : 0,
     email : "",
     phone : "",
-    role : "",
+    role : "owner",
     adress : "",
     country : "Tunisia",
     state : "",
     password : ""
+  }
+
+  constructor(private auth : AuthenticationService, private router: Router, private count : CountryService) {
+    this.initData();
+    if(this.auth.isLoggedIn()){
+      this.router.navigateByUrl('/')
+    }
+   }
+
+  ngOnInit() {
+
+    var t = this.count.getAfricanCountries();
+    console.log("writing from comonent")
+    console.log(t)
+    //console.log()*/
+   
+  }
+
+  initData(){
+    this.emailDuplicated  = false;
+    this.phoneDuplicated = false;
+  }
+
+  
+
+  register($event){
+
+    //this.credentials.role = "owner"
+
+    this.auth.register(this.credentials).subscribe((res)=>{
+      console.log(res)
+
+      if(res["id"]){
+        console.log("exits")
+        if(res["email"] === this.credentials.email){
+          this.emailDuplicated = true;
+        }else{
+          this.emailDuplicated = false;
+        }
+        if(res["phone"] === this.credentials.phone){
+          this.phoneDuplicated = true;
+        }else{
+          this.phoneDuplicated = false;
+        }
+      }else{
+        console.log("add success")
+        console.log(this.auth.isLoggedIn())
+        this.auth.login(this.credentials).subscribe((res)=>{
+
+          if(this.credentials.role === 'owner'){
+            this.router.navigateByUrl('/entreprise')
+            console.log("owner")
+          }else if(this.credentials.role === 'customer'){
+            this.router.navigateByUrl('/product/list')
+          }
+        })
+      }
+
+    })
+
+    console.log(this.credentials)
+  }
+
+  verify(){
+
+    if(this.secondePassword === this.credentials.password){
+      this.passwordMatches = true
+    }else{
+      this.passwordMatches = false
+    }
   }
 
   cities = [
@@ -131,68 +201,4 @@ export class RegisterComponent implements OnInit {
       "name": "Zaghouan",
     }
   ]
-
-  constructor(private auth : AuthenticationService, private router: Router, private count : CountryService) {
-    this.initData();
-    if(this.auth.isLoggedIn()){
-      this.router.navigateByUrl('/')
-    }
-   }
-
-  ngOnInit() {
-
-    var t = this.count.getAfricanCountries();
-    console.log("writing from comonent")
-    console.log(t)
-    //console.log()*/
-   
-  }
-
-  initData(){
-    this.emailDuplicated  = false;
-    this.phoneDuplicated = false;
-  }
-
-  
-
-  register($event){
-
-    this.credentials.role = "owner"
-
-    this.auth.register(this.credentials).subscribe((res)=>{
-      console.log(res)
-
-      if(res["id"]){
-        console.log("exits")
-        if(res["email"] === this.credentials.email){
-          this.emailDuplicated = true;
-        }else{
-          this.emailDuplicated = false;
-        }
-        if(res["phone"] === this.credentials.phone){
-          this.phoneDuplicated = true;
-        }else{
-          this.phoneDuplicated = false;
-        }
-      }else{
-        console.log("add success")
-        if(this.auth.isLoggedIn()){
-          this.router.navigateByUrl('/entreprise')
-        }
-      }
-
-    })
-
-    console.log(this.credentials)
-  }
-
-  verify(){
-
-    if(this.secondePassword === this.credentials.password){
-      this.passwordMatches = true
-    }else{
-      this.passwordMatches = false
-    }
-  }
-
 }

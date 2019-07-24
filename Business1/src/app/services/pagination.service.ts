@@ -19,20 +19,20 @@ export class PaginationService {
     }
     
     let startPage: number, endPage: number;
-    if (totalPages <= 10) {
+    if (totalPages <= 5) {
         startPage = 1;
         endPage = totalPages;
     } else {
 
-      if (currentPage <= 6) {
+      if (currentPage <= 4) {
             startPage = 1;
-            endPage = 10;
+            endPage = 5;
         } else if (currentPage + 4 >= totalPages) {
-            startPage = totalPages - 9;
+            startPage = totalPages - 3;
             endPage = totalPages;
         } else {
-            startPage = currentPage - 5;
-            endPage = currentPage + 4;
+            startPage = currentPage - 2;
+            endPage = currentPage + 2;
         }
     }
 

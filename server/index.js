@@ -26,11 +26,13 @@ app.use(express.static('uploads'))
 var Users = require('./routes/Users')
 var Entrprises = require('./routes/Entreprises')
 var Products = require('./routes/Products')
+var Orders = require('./routes/Orders')
 
 
 app.use('/user', Users)
 app.use('/entre', Entrprises)
 app.use('/product', Products)
+app.use('/order', Orders)
 
 app.listen(port, function() {
   console.log('Server is running on port: ' + port)

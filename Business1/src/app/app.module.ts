@@ -28,6 +28,8 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { AddProductComponent } from './product/add-product/add-product.component';
 import { ShowProductComponent } from './product/show-product/show-product.component';
 import { ListProductComponent } from './product/list-product/list-product.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ViewComponent } from './user/entreprise/view/view.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { ListProductComponent } from './product/list-product/list-product.compon
     AddProductComponent,
     ShowProductComponent,
     ListProductComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    PageNotFoundComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,

@@ -33,6 +33,11 @@
                         <option class="opt" *ngFor="let item of cities" value="">{{ item.name }}</option>
                     </select>
 
+                    <select  class="mod" name="role" [(ngModel)]="credentials.role" id="">
+                        <option class="opt" selected="true" value="owner">Entreprise Owner</option>
+                        <option class="opt" value="customer">Customer</option>
+                    </select>
+
                     <input type="password" class="password"  [(ngModel)]="credentials.password" #passwordControl="ngModel" name="password" placeholder="Password" required>
                     <div *ngIf="!passwordControl.prestine && !passwordControl.dirty && passwordControl.touched || passwordControl.invalid && passwordControl.touched" class="alert alert-error">Password is required !</div>
 

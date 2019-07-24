@@ -15,10 +15,11 @@
                         <li><a class="hvr-underline-from-center active" routerLink="/">Home</a></li>
                         <li><a href="services.html" class="hvr-underline-from-center">Services</a></li>
                         <li><a *ngIf="auth.isLoggedIn()" routerLink="/staff/list" class="hvr-underline-from-center scroll scroll">Team</a></li>
-                        <li><a routerLink="/entreprise/" *ngIf="auth.isLoggedIn() && auth.getUserDetails().role === 'owner'" class="hvr-underline-from-center">{{auth.getUserDetails().role}}</a></li>
+                        <li><a routerLink="/entreprise/view" *ngIf="auth.isLoggedIn() && auth.getUserDetails().role === 'owner'" class="hvr-underline-from-center">My entreprise</a></li>
                         
                         <li>
                             <a *ngIf="!auth.isLoggedIn()" routerLink="/user/login" class="hvr-underline-from-center">Login</a>
+                            <a *ngIf="auth.isLoggedIn() && auth.getUserDetails().role == 'customer' " style="cursor: pointer" class="hvr-underline-from-center"> <i class="fa fa-shopping-cart"></i>  My cart</a>
                             <a *ngIf="auth.isLoggedIn()" style="cursor: pointer" (click)="auth.logout()" class="hvr-underline-from-center">Logout</a>
                     </ul>
                 <!--/div-->
