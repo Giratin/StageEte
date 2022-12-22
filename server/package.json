@@ -18,7 +18,7 @@
     "email-templates": "^2.7.1",
     "express": "^4.17.1",
     "handlebars": "^4.1.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.2",
     "mysql2": "^1.6.5",
     "nodemailer": "^6.3.0",
